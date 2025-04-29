@@ -9,6 +9,7 @@ img_height=600
 axes_to_polar = lambda points: np.array([np.linalg.norm(points[1]-points[0]), np.atan2(points[1][1] - points[0][1], points[1][0] - points[0][0])])
 get_position = lambda r, polar, points: points[0] + polar[0] * r**2.5 * np.array([np.cos(polar[1]),np.sin(polar[1])])
 
+# source = Image.open("./images/personality.jpg") # use this when running from the .bat file
 source = Image.open("./personality_test_app/images/personality.jpg")
 
 def get_base_image() -> go.Figure:

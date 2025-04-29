@@ -1,9 +1,10 @@
 import numpy as np
 from copy import deepcopy
 import plotly.graph_objects as go
-from dash import Dash, html, Input, Output, State, callback, ctx, dcc
+from dash import Dash, html, Input, Output, State, callback, ctx, dcc, clientside_callback
 import dash_bootstrap_components as dbc
 import json
+import os
 
 from personality_test import get_result_plot, get_base_image
 
@@ -21,15 +22,14 @@ test_results = {
 original_results = deepcopy(test_results)
 
 questions_json: dict = {}
+# with open('./questions.json', encoding="utf8") as f:  # use this when running from the .bat file
 with open('./personality_test_app/questions.json', encoding="utf8") as f:
     questions_json = json.load(f)
 question_ids = np.array(list(questions_json.keys()))
 
 q_index = 0
-scale = 0
-architype = None
 form_options = ["Strongly Agree", "Agree", "Slightly Agree", "Slightly Disagree", "Disagree", "Strongly Disagree"]
-form_conversion = np.array([5.0, 4.0, 3.0, 2.0, 1.0, 0.0])
+form_conversion = np.array([4.0, 3.0, 2.0, 1.0, 0.0, -1.0])
 
 form_div = html.Div(
     id='form_div',
@@ -71,6 +71,16 @@ app.layout = html.Div(
             figure=original_fig,
             style={'width': '90%', 'height': '90vh'},
         ),
+        dcc.Store(
+            id='test_results_stored',
+            data=original_results,
+            storage_type='memory',
+        ),
+        dcc.Store(
+            id='q_index_stored',
+            data=q_index,
+            storage_type='memory',
+        )
     ]
 )
 
@@ -85,16 +95,18 @@ app.title = 'Brainrot Personality Test'
     Output('reset_btn','disabled',allow_duplicate=True),
     Output('start_btn','disabled',allow_duplicate=True),
     Output('form_select','value'),
+    Output('test_results_stored','data',allow_duplicate=True),
+    Output('q_index_stored','data',allow_duplicate=True),
     Input('next_btn','n_clicks'),
     Input('start_btn','n_clicks'),
     Input('reset_btn','n_clicks'),
     State('form_select','value'),
+    State('q_index_stored','data'),
+    State('test_results_stored','data'),
     prevent_initial_call=True
 )
-def cycle_questions(n1,n2,n3,selection):
-    global q_index 
-    global scale
-    global architype
+def cycle_questions(n1,n2,n3,selection,q_index,test_results):
+    local_test_results = deepcopy(test_results)
     hide_next_btn = False
     hide_result_btn = True
     hide_form_div = False
@@ -104,15 +116,17 @@ def cycle_questions(n1,n2,n3,selection):
     form_reset = None # reset the form value each time the questions are cycled
     if ctx.triggered_id in ['start_btn', 'reset_btn']:
         np.random.shuffle(question_ids) # randomize question order each time
-        q_index = 0
-        scale = questions_json[question_ids[q_index]]['scale']
-        architype = questions_json[question_ids[q_index]]['type']
-        text = f'Q{q_index + 1}/{len(questions_json)}: {questions_json[question_ids[q_index]]['text']}' # we 1 index here :)
-        q_index += 1
-        # Reset the internal test results 
-        global test_results
-        test_results = deepcopy(original_results)
-        return text, hide_next_btn, hide_result_btn, hide_form_div, disable_next_btn, disable_reset_btn, disable_start_btn, form_reset
+        text = f'Q1/{len(questions_json)}: {questions_json[question_ids[0]]['text']}' # we 1 index here :)
+        return (text, 
+                hide_next_btn,
+                hide_result_btn, 
+                hide_form_div,
+                disable_next_btn, 
+                disable_reset_btn, 
+                disable_start_btn, 
+                form_reset, 
+                deepcopy(original_results), 
+                1) 
 
     if q_index == len(questions_json):
 
@@ -123,7 +137,16 @@ def cycle_questions(n1,n2,n3,selection):
         disable_reset_btn = False
         disable_start_btn = True
 
-        return text, hide_next_btn, hide_result_btn, hide_form_div, disable_next_btn, disable_reset_btn, disable_start_btn, form_reset
+        return (text,
+                hide_next_btn,
+                hide_result_btn,
+                hide_form_div,
+                disable_next_btn,
+                disable_reset_btn,
+                disable_start_btn,
+                form_reset,
+                local_test_results, # <-- want these to stay the same until the results are returned
+                q_index)            # <--
     
     # Get necessary info for incrementing results
     scale = questions_json[question_ids[q_index]]['scale']
@@ -131,27 +154,26 @@ def cycle_questions(n1,n2,n3,selection):
     text = f'Q{q_index + 1}/{len(questions_json)}: {questions_json[question_ids[q_index]]['text']}' # and here :)
 
     # Increment results
-    test_results[architype] = test_results[architype] + form_conversion[np.where(selection==np.array(form_options))][0] * scale / np.max(form_conversion) / 6
+    local_test_results[architype] = local_test_results[architype] + form_conversion[np.where(selection==np.array(form_options))][0] * scale / 18.0
     q_index += 1
 
-    return text, hide_next_btn, hide_result_btn, hide_form_div, disable_next_btn, disable_reset_btn, disable_start_btn, form_reset
+    return text, hide_next_btn, hide_result_btn, hide_form_div, disable_next_btn, disable_reset_btn, disable_start_btn, form_reset, local_test_results, q_index
 
 
 @callback(
     Output('result_plot','figure',allow_duplicate=True),
     Output('next_btn','hidden',allow_duplicate=True),
+    Output('test_results_stored','data',allow_duplicate=True),
     Input('result_btn','n_clicks'),
+    State('test_results_stored','data'),
     prevent_initial_call=True
 )
-def return_test_results(n):
-    global test_results
+def return_test_results(n,test_results: dict):
     results = np.array(list(test_results.values()))
-    test_results = deepcopy(original_results)
-    return get_result_plot(results), True
+    return get_result_plot(results), True, deepcopy(original_results)
 
 @callback(
     Output('result_plot','figure',allow_duplicate=True),
-    # Output('next_btn','hidden',allow_duplicate=True),
     Input('reset_btn','n_clicks'),
     prevent_initial_call=True
 )
@@ -172,4 +194,12 @@ def enable_next_btn(v):
     return True
 
 if __name__ == '__main__':
+    # -- For "production"
+    # Run this at every start up in order to enable 8080 port forwarding
+    # os.system('telnet google.com 443') 
+
+    # Uncomment and change this to host computer IP when running  
+    # app.run(host="0.0.0.0",port='8080')
+
+    # -- For running locally for testing
     app.run(debug=False)
