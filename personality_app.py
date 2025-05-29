@@ -146,7 +146,6 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
                 score_debug_text) 
 
     if q_index+1 == len(questions_json):
-
         text = ''
         hide_next_btn = True
         hide_form_div = True
