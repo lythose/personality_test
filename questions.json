@@ -208,5 +208,41 @@
         "text": "I am generally a happy person and make the people around me happy too",
         "scale": 1.0,
         "type": "clown"
+    },
+
+    "I1": {
+        "text": "I frequently organize events and make plans to spend time with friends",
+        "scale": 1.0,
+        "type": "instigator"
+    },
+    
+    "I2": {
+        "text": "I enjoy saying controversial or strange things to jumpstart conversation",
+        "scale": 1.0,
+        "type": "instigator"
+    },
+    
+    "I3": {
+        "text": "I have been called a pot stirrer and/or puppet master",
+        "scale": 1.0,
+        "type": "instigator"
+    },
+    
+    "I4": {
+        "text": "I tell people what other people have said about them to start drama",
+        "scale": 1.0,
+        "type": "instigator"
+    },
+    
+    "I5": {
+        "text": "I come up with fun activities or ideas for other people to try with me",
+        "scale": 1.0,
+        "type": "instigator"
+    },
+    
+    "I6": {
+        "text": "I enjoy manipulating my friends",
+        "scale": 1.0,
+        "type": "instigator"
     }
 }
