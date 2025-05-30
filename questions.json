@@ -244,5 +244,41 @@
         "text": "I enjoy manipulating my friends",
         "scale": 1.0,
         "type": "instigator"
+    },
+
+    "O1": {
+        "text": "I am detail oriented and take joy in organizing my work and life",
+        "scale": 1.0,
+        "type": "organizer"
+    },
+    
+    "O2": {
+        "text": "I become upset when things are not in their proper place",
+        "scale": 1.0,
+        "type": "organizer"
+    },
+    
+    "O3": {
+        "text": "I have a clean apartment",
+        "scale": 1.0,
+        "type": "organizer"
+    },
+    
+    "O4": {
+        "text": "Too much chaos stresses me out",
+        "scale": 1.0,
+        "type": "organizer"
+    },
+    
+    "O5": {
+        "text": "I am on time to things",
+        "scale": 1.0,
+        "type": "organizer"
+    },
+    
+    "O6": {
+        "text": "I enjoy making spreadsheets",
+        "scale": 1.0,
+        "type": "organizer"
     }
 }
