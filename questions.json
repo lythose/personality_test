@@ -1,23 +1,23 @@
 {
     "H1": {
-        "text": "I have people in my life who I would be happy to see fail (family does not count)", 
+        "text": "I have people in my life who I would be happy to see fail", 
         "scale": 1.0, 
         "type": "hater"
     }, 
     "H2": {
-        "text": "I do not like most of my coworkers ", 
+        "text": "I do not like most of my coworkers", 
         "scale": 1.0, 
         "type": "hater"
     }, 
     "H3": {
         "text": "I enjoy making fun of my friends", 
-        "scale": 1.0, 
-        "type": "hater"
+        "scale": [1.0, 1.0, 1.0],
+        "type": ["hater", "instigator", "clown"]
     }, 
     "H4": {
         "text": "I have friendships that revolve around making fun of someone else ", 
-        "scale": 1.0, 
-        "type": "hater"
+        "scale": [1.0, 1.0],
+        "type": ["hater", "instigator"]
     }, 
     "H5": {
         "text": "People often irritate me", 
@@ -50,14 +50,14 @@
     
     "Y4": {
         "text": "I can easily talk to my friends for 5+ hours",
-        "scale": 1.0,
-        "type": "yapper"
+        "scale": [1.0, -1.0],
+        "type": ["yapper", "brick"]
     },
     
     "Y5": {
         "text": "I enjoy social gatherings",
-        "scale": 1.0,
-        "type": "yapper"
+        "scale": [1.0, -1.0],
+        "type": ["yapper", "brick"]
     },
     
     "Y6": {
@@ -91,13 +91,13 @@
     },
     
     "B5": {
-        "text": "I have not made very many new friends in the last year ",
+        "text": "I have not made very many new friends in the last year",
         "scale": 1.0,
         "type": "brick"
     },
     
     "B6": {
-        "text": "I often sit and think about nothing ",
+        "text": "I spend 4+ hours on my phone every day",
         "scale": 1.0,
         "type": "brick"
     },
@@ -116,8 +116,8 @@
     
     "S3": {
         "text": "I plan to climb a mountain in the next two years or have climbed a mountain in the past three years",
-        "scale": 1.0,
-        "type": "sender"
+        "scale": [1.0, 1.0],
+        "type": ["sender", "grinder"]
     },
     
     "S4": {
@@ -127,9 +127,9 @@
     },
     
     "S5": {
-        "text": "I enjoy doing things that give me an adrenaline rush ",
-        "scale": 1.0,
-        "type": "sender"
+        "text": "I enjoy doing things that give me an adrenaline rush",
+        "scale": [1.0, -1.0],
+        "type": ["sender", "brick"]
     },
     
     "S6": {
@@ -145,7 +145,7 @@
     },
     
     "G2": {
-        "text": "I will often continue to work on a problem for much longer than other people would ",
+        "text": "I will often continue to work on a problem for much longer than other people would",
         "scale": 1.0,
         "type": "grinder"
     },
@@ -163,13 +163,13 @@
     },
     
     "G5": {
-        "text": "Sunk cost fallacy does not exist for me—I will continue to work on something until it is finished ",
+        "text": "Sunk cost fallacy does not exist for me—I will continue to work on something until it is finished",
         "scale": 1.0,
         "type": "grinder"
     },
     
     "G6": {
-        "text": "I would voluntarily choose a job where I am working much more than 40 hours/week",
+        "text": "I would voluntarily choose a job where I am working significantly more than 40 hours/week",
         "scale": 1.0,
         "type": "grinder"
     },
@@ -212,18 +212,18 @@
 
     "I1": {
         "text": "I frequently organize events and make plans to spend time with friends",
-        "scale": 1.0,
-        "type": "instigator"
+        "scale": [1.0, -1.0],
+        "type": ["instigator", "brick"]
     },
     
     "I2": {
         "text": "I enjoy saying controversial or strange things to jumpstart conversation",
-        "scale": 1.0,
-        "type": "instigator"
+        "scale": [1.0, 1.0], 
+        "type": ["instigator", "yapper"]
     },
     
     "I3": {
-        "text": "I have been called a pot stirrer and/or puppet master",
+        "text": "I have been called a pot stirrer",
         "scale": 1.0,
         "type": "instigator"
     },
@@ -236,8 +236,8 @@
     
     "I5": {
         "text": "I come up with fun activities or ideas for other people to try with me",
-        "scale": 1.0,
-        "type": "instigator"
+        "scale": [1.0, -1.0],
+        "type": ["instigator", "brick"]
     },
     
     "I6": {
@@ -259,9 +259,9 @@
     },
     
     "O3": {
-        "text": "I have a clean apartment",
-        "scale": 1.0,
-        "type": "organizer"
+        "text": "I have a weekly routine that I generally do not like to deviate from",
+        "scale": [1.0, 1.0],
+        "type": ["organizer", "brick"]
     },
     
     "O4": {

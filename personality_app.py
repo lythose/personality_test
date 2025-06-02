@@ -19,6 +19,8 @@ test_results = {
     "brick": 0.0,
     "sender": 0.0,
     "yapper": 0.0,
+    "instigator": 0.0, 
+    "organizer": 0.0
 }
 original_results = deepcopy(test_results)
 
@@ -128,7 +130,7 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
     form_reset = None # reset the form value each time the questions are cycled
     if ctx.triggered_id in ['start_btn', 'reset_btn']:
         np.random.shuffle(question_ids) # randomize question order each time
-        text = f'Q1/{len(questions_json)}: {questions_json[question_ids[0]]['text']}' # we 1 index here :)
+        text = f'Q1/{len(questions_json)}: {questions_json[question_ids[0]]['text']}' # we 1 index here >:(
         debug_text = f'[{questions_json[question_ids[0]]['type']}]'
         score_debug_text = ''
         return (text, 
