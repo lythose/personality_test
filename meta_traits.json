@@ -1,0 +1,101 @@
+{
+    "type1": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 0.0,
+        "brick": 0.0,
+        "sender": 0.0,
+        "yapper": 1.0,
+        "instigator": 1.0,
+        "organizer": 0.0,
+        "type": "puppet master"
+    },
+    "type2": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 1.0,
+        "brick": 0.0,
+        "sender": 1.0,
+        "yapper": 0.0,
+        "instigator": 0.0,
+        "organizer": 0.0,
+        "type": "granola (sweaty tryhard)"
+    },
+    "type3": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 1.0,
+        "brick": 0.0,
+        "sender": 0.0,
+        "yapper": 0.0,
+        "instigator": 0.0,
+        "organizer": 1.0,
+        "type": "spacex alum"
+    },
+    "type4": {
+        "clown": 1.0,
+        "hater": 1.0,
+        "grinder": 0.0,
+        "brick": 0.0,
+        "sender": 0.0,
+        "yapper": 0.0,
+        "instigator": 0.0,
+        "organizer": 0.0,
+        "type": "evil jingles"
+    },
+    "type5": {
+        "clown": 0.0,
+        "hater": 1.0,
+        "grinder": 0.0,
+        "brick": 0.0,
+        "sender": 0.0,
+        "yapper": 1.0,
+        "instigator": 0.0,
+        "organizer": 1.0,
+        "type": "asian mother"
+    },
+    "type6": {
+        "clown": 0.0,
+        "hater": 1.0,
+        "grinder": 1.0,
+        "brick": 0.0,
+        "sender": 0.0,
+        "yapper": 0.0,
+        "instigator": 1.0,
+        "organizer": 1.0,
+        "type": "gaslight gatekeep girlboss"
+    },
+    "type7": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 1.0,
+        "brick": 0.0,
+        "sender": 0.0,
+        "yapper": 0.0,
+        "instigator": 0.0,
+        "organizer": 1.0,
+        "type": "maximizer of shareholder value"
+    },
+    "type8": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 0.0,
+        "brick": 0.0,
+        "sender": 0.0,
+        "yapper": 0.0,
+        "instigator": 1.0,
+        "organizer": 1.0,
+        "type": "friend group mom"
+    },
+    "type9": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 1.0,
+        "brick": 0.0,
+        "sender": 0.0,
+        "yapper": 0.0,
+        "instigator": 0.0,
+        "organizer": 1.0,
+        "type": "big ol' nerd"
+    }
+}
