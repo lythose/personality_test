@@ -1,6 +1,7 @@
 import numpy as np
 import plotly.graph_objects as go
 from PIL import Image
+import json
 
 # Lambda functions 
 axes_to_polar = lambda points: np.array([np.linalg.norm(points[1]-points[0]), np.atan2(points[1][1] - points[0][1], points[1][0] - points[0][0])])
@@ -73,3 +74,36 @@ def get_result_plot(results: np.ndarray) -> go.Figure:
                     opacity=0.7)
     
     return fig
+
+def get_meta_results(results: np.ndarray, meta_dict: dict):
+    """ Process results to see if there is a metatype 
+
+    returns: string for the name of the meta type
+    """
+
+    meta_array = np.array([list(meta.values())[0:-1] for meta in list(meta_dict.values())]).T
+
+    # using the square to eliminate all the irrelevant scores from each meta type and then comparing against the original array 
+    comparison = np.all(np.equal((results.reshape(8,1) * meta_array - meta_array**2) > 0, meta_array > 0),axis=0)
+
+    # get the index of the meta type TODO what if someone has multiple? 
+    if len(np.where(comparison)[0]) > 0:
+        meta_result_idx = np.where(comparison)[0][0]
+
+        return list(meta_dict.values())[meta_result_idx]['type']
+    
+    else:
+        return "Yourself!" # we can't figure out what you are :)
+
+
+if __name__=="__main__":
+    with open('./personality_test_app/meta_traits.json', encoding="utf8") as f:
+        meta_json = json.load(f)
+
+    # none testing
+    results = np.linspace(0,.1,8)
+
+    # one testing
+    # results = np.linspace(0,1,8)
+
+    get_meta_results(results,meta_json)

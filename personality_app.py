@@ -6,7 +6,7 @@ import dash_bootstrap_components as dbc
 import json
 import os
 
-from personality_test import get_result_plot, get_base_image
+from personality_test import get_result_plot, get_base_image, get_meta_results
 
 original_fig = get_base_image()
 HIDE_DEBUG = True # Disable to see question mapping and scores while taking the test
@@ -30,6 +30,10 @@ with open('./personality_test_app/questions.json', encoding="utf8") as f:
     questions_json = json.load(f)
 question_ids = np.array(list(questions_json.keys()))
 
+meta_json: dict = {}
+with open('./personality_test_app/meta_traits.json', encoding="utf8") as f:
+    meta_json = json.load(f)
+
 q_index = 0
 form_options = ["Strongly Agree", "Agree", "Slightly Agree", "Slightly Disagree", "Disagree", "Strongly Disagree"]
 form_conversion = np.array([4.0, 3.0, 2.0, 1.0, 0.0, -1.0])
@@ -43,6 +47,16 @@ form_div = html.Div(
         dcc.RadioItems(options=form_options,id='form_select')
     ],
     hidden=True
+)
+
+meta_div = html.Div(
+    id='meta_div',
+    children=[
+        html.H2("Congrats! You're a ..."),
+        html.H3("",id="meta_result_header"),
+        html.P("lorem ipsum",id="meta_description"),
+    ],
+    hidden=True,
 )
 
 app = Dash(__name__)
@@ -76,6 +90,8 @@ app.layout = html.Div(
             figure=original_fig,
             style={'width': '90%', 'height': '90vh'},
         ),
+        html.Br(),
+        meta_div,
         dcc.Store( # Stores the test results client side 
             id='test_results_stored',
             data=original_results,
@@ -195,26 +211,30 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
     Output('next_btn','hidden',allow_duplicate=True),
     Output('test_results_stored','data',allow_duplicate=True),
     Output('q_index_stored','data',allow_duplicate=True),
+    Output('meta_result_header','children',allow_duplicate=True),
+    Output('meta_div','hidden',allow_duplicate=True),
     Input('result_btn','n_clicks'),
     State('test_results_stored','data'),
     prevent_initial_call=True
 )
 def return_test_results(n,test_results: dict):
     results = np.array(list(test_results.values()))
+    meta_results_text = get_meta_results(results, meta_json)
     q_index = 0
-    return get_result_plot(results), True, deepcopy(original_results), q_index
+    return get_result_plot(results), True, deepcopy(original_results), q_index, meta_results_text, False
 
 @callback(
     Output('result_plot','figure',allow_duplicate=True),
     Output('test_results_stored','data',allow_duplicate=True),
     Output('q_index_stored','data',allow_duplicate=True),
+    Output('meta_div','hidden',allow_duplicate=True),
     Input('reset_btn','n_clicks'),
     prevent_initial_call=True
 )
 def reset_results(n):
     fig = get_base_image()
     q_index = 0
-    return fig, deepcopy(original_results), q_index
+    return fig, deepcopy(original_results), q_index, True
 
 @callback(
     Output('next_btn','disabled',allow_duplicate=True),
