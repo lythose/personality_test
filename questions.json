@@ -1,6 +1,6 @@
 {
     "H1": {
-        "text": "I have people in my life who I would be happy to see fail", 
+        "text": "I know people who I would be happy to see fail", 
         "scale": 1.0, 
         "type": "hater"
     }, 
@@ -91,7 +91,7 @@
     },
     
     "B5": {
-        "text": "I have not made very many new friends in the last year",
+        "text": "I do not own a bedframe/chair/other essential piece of furniture",
         "scale": 1.0,
         "type": "brick"
     },
@@ -139,19 +139,19 @@
     },
     
     "G1": {
-        "text": "I like being good at things and will put in a lot of time and effort to become better",
+        "text": "I will put in a lot of time and effort to become better at something",
         "scale": 1.0,
         "type": "grinder"
     },
     
     "G2": {
-        "text": "I will often continue to work on a problem for much longer than other people would",
+        "text": "I will continue to work on a problem for much longer than other people would",
         "scale": 1.0,
         "type": "grinder"
     },
     
     "G3": {
-        "text": "I frequently close out the office or arrive before everyone else",
+        "text": "I spend more than 40 hours a week working",
         "scale": 1.0,
         "type": "grinder"
     },
@@ -199,7 +199,7 @@
     },
     
     "C5": {
-        "text": "I have been emojied in starfish google chat",
+        "text": "I have been emojied in Starfish google chat",
         "scale": 1.0,
         "type": "clown"
     },
@@ -235,7 +235,7 @@
     },
     
     "I5": {
-        "text": "I come up with fun activities or ideas for other people to try with me",
+        "text": "I frequently come up with fun activities or ideas for other people to try with me",
         "scale": [1.0, -1.0],
         "type": ["instigator", "brick"]
     },
@@ -265,7 +265,7 @@
     },
     
     "O4": {
-        "text": "Too much chaos stresses me out",
+        "text": "Chaos or disorganization stresses me out",
         "scale": 1.0,
         "type": "organizer"
     },

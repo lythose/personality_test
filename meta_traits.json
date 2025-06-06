@@ -44,15 +44,15 @@
         "type": "evil jingles"
     },
     "type5": {
-        "clown": 0.0,
-        "hater": 0.85,
-        "grinder": 0.0,
+        "clown": 0.85,
+        "hater": 0.0,
+        "grinder": 0.85,
         "brick": 0.0,
         "sender": 0.0,
         "yapper": 0.85,
         "instigator": 0.0,
         "organizer": 0.85,
-        "type": "asian mother"
+        "type": "andy"
     },
     "type6": {
         "clown": 0.0,
@@ -97,5 +97,16 @@
         "instigator": 0.0,
         "organizer": 0.85,
         "type": "big ol' nerd"
+    }, 
+    "type10": {
+        "clown": 0.85,
+        "hater": 0.0,
+        "grinder": 0.0,
+        "brick": 0.85,
+        "sender": 0.0,
+        "yapper": 0.85,
+        "instigator": 0.85,
+        "organizer": 0.0,
+        "type": "friend group child"
     }
 }
