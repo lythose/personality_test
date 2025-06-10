@@ -8,8 +8,10 @@ import os
 
 from personality_test import get_result_plot, get_base_image, get_meta_results
 
+external_stylesheets = [dbc.themes.BOOTSTRAP]
+
 original_fig = get_base_image()
-HIDE_DEBUG = False # Disable to see question mapping and scores while taking the test
+HIDE_DEBUG = True # Disable to see question mapping and scores while taking the test
 
 # Dictionary to update as the test is taken
 test_results = {
@@ -78,46 +80,68 @@ meta_div = html.Div(
         html.Br(),
         html.Img(id='meme_img',
                  style={
-                     "width": "25%",
-                     "height": "25%",
+                     "width": "50%",
+                     "height": "50%",
                  }
         ),
     ],
     hidden=True,
 )
 
-app = Dash(__name__)
+app = Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(
     [
         html.H1('Brainrot Personality Test'),
-        form_div,
         html.Br(),
-        html.Button(
-            "Start Questions",
-            id='start_btn',
+        html.Div(
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            form_div,
+                            html.Br(),
+                            html.Button(
+                                "Start Questions",
+                                id='start_btn',
+                            ),
+                            html.Button(
+                                "Next Question",
+                                id='next_btn',
+                                hidden=True,
+                                disabled=True,
+                            ),
+                            html.Button(
+                                "Get Results!",
+                                id='result_btn',
+                                hidden=True,
+                            ),
+                            html.Button(
+                                "Start Over",
+                                id='reset_btn',
+                                disabled=True
+                            ),
+                            dcc.Graph(
+                                id='result_plot',
+                                figure=original_fig,
+                            ),
+                            html.Br(),
+                        ],
+                        width="auto",
+                        
+                    ), 
+                    dbc.Col(
+                        [
+                            meta_div,
+                        ],
+                        width="auto",
+                    )
+                ]
+            ),
+            style={
+                "border": "5px solid white",
+            }
         ),
-        html.Button(
-            "Next Question",
-            id='next_btn',
-            hidden=True,
-            disabled=True,
-        ),
-        html.Button(
-            "Get Results!",
-            id='result_btn',
-            hidden=True,
-        ),
-        html.Button(
-            "Start Over",
-            id='reset_btn',
-            disabled=True
-        ),
-        dcc.Graph(
-            id='result_plot',
-            figure=original_fig,
-        ),
-        html.Br(),
-        meta_div,
+        # meta_div,
         dcc.Store( # Stores the test results client side 
             id='test_results_stored',
             data=original_results,
