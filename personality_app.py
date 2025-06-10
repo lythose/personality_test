@@ -91,7 +91,24 @@ meta_div = html.Div(
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(
     [
-        html.H1('Brainrot Personality Test'),
+        html.Div(
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.H1('Brainrot Personality Test'),
+                    ),
+                    dbc.Col(
+                        html.Img(src=app.get_asset_url("subway_surfers.gif"),
+                                 title="You're cooked",
+                                 height="30px",
+                                 width="50px")
+                    ),
+                ]
+            ),
+            style={
+                "border": "2px solid white",
+            }
+        ),
         html.Br(),
         html.Div(
             dbc.Row(
