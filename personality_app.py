@@ -80,7 +80,7 @@ meta_div = html.Div(
         html.Br(),
         html.Img(id='meme_img',
                  style={
-                     "width": "50%",
+                     "width": "25vw",
                      "height": "50%",
                  }
         ),
