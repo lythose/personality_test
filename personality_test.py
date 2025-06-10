@@ -28,8 +28,9 @@ def get_base_image() -> go.Figure:
         layer="below",
         source=source
     )
-    fig.update_xaxes(showgrid=False, range=(0, sizex))
-    fig.update_yaxes(showgrid=False, scaleanchor='x', range=(sizey, 0))
+    fig.update_xaxes(dict(showgrid=False, range=(0, sizex), visible=False))
+    fig.update_yaxes(dict(showgrid=False, scaleanchor='x', range=(sizey, 0), visible=False))
+    fig.update_layout(width=sizex, height=sizey, plot_bgcolor='#ffffff')
 
     return fig
 
