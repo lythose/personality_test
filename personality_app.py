@@ -8,6 +8,8 @@ import os
 
 from personality_test import get_result_plot, get_base_image, get_meta_results
 
+external_stylesheets = [dbc.themes.BOOTSTRAP]
+
 original_fig = get_base_image()
 HIDE_DEBUG = True # Disable to see question mapping and scores while taking the test
 
@@ -23,6 +25,26 @@ test_results = {
     "organizer": 0.0
 }
 original_results = deepcopy(test_results)
+
+img_folder = "./personality_test_app/images/"
+results_meme_srcs = {
+    "clown": {"src": "clown_meme.jpg", 
+              "title": "Welcome to the Clown Council"},
+    "hater": {"src": "hater_meme.jpg", 
+              "title": "You should go to therapy"},
+    "grinder": {"src": "grinder_meme.jpg", 
+                "title": "The shareholders are very pleased"},
+    "brick": {"src": "brick_meme.jpg", 
+              "title": "Please touch some grass"},
+    "sender": {"src": "sender_meme.jpg", 
+               "title": "Break a leg!"},
+    "yapper": {"src": "yapper_meme.jpg", 
+               "title": "Oh, PLEASE go on..."},
+    "instigator": {"src": "instigator_meme.jpg",
+                    "title": "Are you a secret politician?"}, 
+    "organizer": {"src": "organizer_meme.jpg", 
+                  "title": ""},
+}
 
 questions_json: dict = {}
 # with open('./questions.json', encoding="utf8") as f:  # use this when running from the .bat file
@@ -55,43 +77,88 @@ meta_div = html.Div(
         html.H2("Congrats! You're a ..."),
         html.H3("",id="meta_result_header"),
         html.P("lorem ipsum",id="meta_description"),
+        html.Br(),
+        html.Img(id='meme_img',
+                 style={
+                     "width": "25vw",
+                     "height": "50%",
+                 }
+        ),
     ],
     hidden=True,
 )
 
-app = Dash(__name__)
+app = Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(
     [
-        html.H1('Brainrot Personality Test'),
-        form_div,
-        html.Br(),
-        html.Button(
-            "Start Questions",
-            id='start_btn',
-        ),
-        html.Button(
-            "Next Question",
-            id='next_btn',
-            hidden=True,
-            disabled=True,
-        ),
-        html.Button(
-            "Get Results!",
-            id='result_btn',
-            hidden=True,
-        ),
-        html.Button(
-            "Start Over",
-            id='reset_btn',
-            disabled=True
-        ),
-        dcc.Graph(
-            id='result_plot',
-            figure=original_fig,
-            style={'width': '90%', 'height': '90vh'},
+        html.Div(
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.H1('Brainrot Personality Test'),
+                    ),
+                    dbc.Col(
+                        html.Img(src=app.get_asset_url("subway_surfers.gif"),
+                                 title="You're cooked",
+                                 height="30px",
+                                 width="50px")
+                    ),
+                ]
+            ),
+            style={
+                "border": "2px solid white",
+            }
         ),
         html.Br(),
-        meta_div,
+        html.Div(
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            form_div,
+                            html.Br(),
+                            html.Button(
+                                "Start Questions",
+                                id='start_btn',
+                            ),
+                            html.Button(
+                                "Next Question",
+                                id='next_btn',
+                                hidden=True,
+                                disabled=True,
+                            ),
+                            html.Button(
+                                "Get Results!",
+                                id='result_btn',
+                                hidden=True,
+                            ),
+                            html.Button(
+                                "Start Over",
+                                id='reset_btn',
+                                disabled=True
+                            ),
+                            dcc.Graph(
+                                id='result_plot',
+                                figure=original_fig,
+                            ),
+                            html.Br(),
+                        ],
+                        width="auto",
+                        
+                    ), 
+                    dbc.Col(
+                        [
+                            meta_div,
+                        ],
+                        width="auto",
+                    )
+                ]
+            ),
+            style={
+                "border": "5px solid white",
+            }
+        ),
+        # meta_div,
         dcc.Store( # Stores the test results client side 
             id='test_results_stored',
             data=original_results,
@@ -213,15 +280,21 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
     Output('q_index_stored','data',allow_duplicate=True),
     Output('meta_result_header','children',allow_duplicate=True),
     Output('meta_div','hidden',allow_duplicate=True),
+    Output('meme_img','src',allow_duplicate=True),
+    Output('meme_img','title',allow_duplicate=True),
     Input('result_btn','n_clicks'),
     State('test_results_stored','data'),
     prevent_initial_call=True
 )
 def return_test_results(n,test_results: dict):
     results = np.array(list(test_results.values()))
+    idx_max = np.where(results == np.max(results))[0][0]
+    type_max = list(test_results.keys())[idx_max]
+    img_src = results_meme_srcs[type_max]["src"]
+    img_alt = results_meme_srcs[type_max]["title"]
     meta_results_text = get_meta_results(results, meta_json)
     q_index = 0
-    return get_result_plot(results), True, deepcopy(original_results), q_index, meta_results_text, False
+    return get_result_plot(results), True, deepcopy(original_results), q_index, meta_results_text, False, app.get_asset_url(img_src), img_alt
 
 @callback(
     Output('result_plot','figure',allow_duplicate=True),
