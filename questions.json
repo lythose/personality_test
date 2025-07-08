@@ -210,40 +210,40 @@
         "type": "clown"
     },
 
-    "I1": {
-        "text": "I frequently organize events and make plans to spend time with friends",
-        "scale": [1.0, -1.0],
-        "type": ["instigator", "brick"]
+    "W1": {
+        "text": "I am often sidetracked while in the middle of working on a task",
+        "scale": 1.0,
+        "type": "wanderer"
     },
     
-    "I2": {
-        "text": "I enjoy saying controversial or strange things to jumpstart conversation",
+    "W2": {
+        "text": "It is very easy to start me on a long conversational tangent",
         "scale": [1.0, 1.0], 
-        "type": ["instigator", "yapper"]
+        "type": ["wanderer", "yapper"]
     },
     
-    "I3": {
-        "text": "I have been called a pot stirrer",
+    "W3": {
+        "text": "I have many unfinished projects and side hobbies",
         "scale": 1.0,
-        "type": "instigator"
+        "type": "wanderer"
     },
     
-    "I4": {
-        "text": "I tell people what other people have said about them to start drama",
+    "W4": {
+        "text": "I am easily distracted by noise or conversations around me",
         "scale": 1.0,
-        "type": "instigator"
+        "type": "wanderer"
     },
     
-    "I5": {
-        "text": "I frequently come up with fun activities or ideas for other people to try with me",
-        "scale": [1.0, -1.0],
-        "type": ["instigator", "brick"]
-    },
-    
-    "I6": {
-        "text": "I enjoy manipulating my friends",
+    "W5": {
+        "text": "I fidget when I am sitting for a long time",
         "scale": 1.0,
-        "type": "instigator"
+        "type": "wanderer"
+    },
+    
+    "W6": {
+        "text": "It is difficult for me to start a task that requires a lot of organization/documentation",
+        "scale": 1.0,
+        "type": "wanderer"
     },
 
     "O1": {
@@ -265,7 +265,7 @@
     },
     
     "O4": {
-        "text": "Chaos or disorganization stresses me out",
+        "text": "Chaos or disorganization in any area of my life stresses me out",
         "scale": 1.0,
         "type": "organizer"
     },
@@ -277,7 +277,7 @@
     },
     
     "O6": {
-        "text": "I enjoy making spreadsheets",
+        "text": "I enjoy optimizing and documenting my life and daily routines",
         "scale": 1.0,
         "type": "organizer"
     }
