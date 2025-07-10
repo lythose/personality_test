@@ -66,7 +66,7 @@ form_div = html.Div(
         html.P("Question",id='form_question'),
         html.P(id='question_debug',hidden=HIDE_DEBUG),
         html.P(id='score_debug',hidden=HIDE_DEBUG),
-        dcc.RadioItems(options=form_options,id='form_select')
+        dcc.RadioItems(options=form_options,id='form_select',className='radioItems')
     ],
     hidden=True
 )
@@ -100,13 +100,13 @@ app.layout = html.Div(
                     dbc.Col(
                         html.Img(src=app.get_asset_url("subway_surfers.gif"),
                                  title="You're cooked",
-                                 height="30px",
-                                 width="50px")
+                                 height="60px",
+                                 width="100px")
                     ),
                 ]
             ),
             style={
-                "border": "2px solid white",
+                "border": "2px #212121",
             }
         ),
         html.Br(),
@@ -130,7 +130,7 @@ app.layout = html.Div(
                             html.Button(
                                 "Get Results!",
                                 id='result_btn',
-                                hidden=True,
+                                hidden=HIDE_DEBUG, # Just to be able to skip to the end
                             ),
                             html.Button(
                                 "Start Over",
@@ -155,7 +155,7 @@ app.layout = html.Div(
                 ]
             ),
             style={
-                "border": "5px solid white",
+                "border": "5px #212121",
             }
         ),
         # meta_div,

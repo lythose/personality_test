@@ -4,6 +4,15 @@ h1 {
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     animation: effect 2s linear infinite;
 }
+
+body {
+    background-color: #212121;
+}
+
+P, H2, H3, .radioItems {
+    color: white;
+}
+
 @keyframes effect {
     0% {
         background: linear-gradient(#008000, #00FF00);
