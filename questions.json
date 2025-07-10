@@ -12,12 +12,12 @@
     "H3": {
         "text": "I enjoy making fun of my friends", 
         "scale": [1.0, 1.0, 1.0],
-        "type": ["hater", "instigator", "clown"]
+        "type": ["hater", "clown"]
     }, 
     "H4": {
         "text": "I have friendships that revolve around making fun of someone else ", 
-        "scale": [1.0, 1.0],
-        "type": ["hater", "instigator"]
+        "scale": 1.0,
+        "type": "hater"
     }, 
     "H5": {
         "text": "People often irritate me", 
