@@ -150,7 +150,18 @@
         "sender": 0.85,
         "yapper": 0.0,
         "wanderer": 0.0,
-        "organizer": 0.85,
+        "organizer": 0.0,
         "type": "crayon eater"
+    }, 
+    "type15": {
+        "clown": 0.0,
+        "hater": 0.85,
+        "grinder": 0.85,
+        "brick": 0.85,
+        "sender": 0.0,
+        "yapper": 0.0,
+        "wanderer": 0.0,
+        "organizer": 0.85,
+        "type": "severe vitamin deficiency"
     }
 }
