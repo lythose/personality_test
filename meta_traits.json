@@ -19,7 +19,7 @@
         "yapper": 0.0,
         "wanderer": 0.0,
         "organizer": 0.0,
-        "type": "granola (sweaty tryhard)"
+        "type": "granola"
     },
     "type3": {
         "clown": 0.0,
@@ -88,15 +88,15 @@
         "type": "friend group mom"
     },
     "type9": {
-        "clown": 0.0,
+        "clown": 0.85,
         "hater": 0.0,
-        "grinder": 0.85,
-        "brick": 0.0,
-        "sender": 0.0,
+        "grinder": 0.0,
+        "brick": 0.85,
+        "sender": 0.85,
         "yapper": 0.0,
-        "wanderer": 0.0,
-        "organizer": 0.85,
-        "type": "big ol' nerd"
+        "wanderer": 0.85,
+        "organizer": 0.0,
+        "type": "most likely to get eaten by a bear"
     }, 
     "type10": {
         "clown": 0.85,
@@ -108,5 +108,49 @@
         "wanderer": 0.85,
         "organizer": 0.0,
         "type": "friend group child"
+    }, 
+    "type11": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 0.85,
+        "brick": 0.0,
+        "sender": 0.85,
+        "yapper": 0.0,
+        "wanderer": 0.0,
+        "organizer": 0.85,
+        "type": "sweaty tryhard"
+    }, 
+    "type12": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 0.85,
+        "brick": 0.0,
+        "sender": 0.85,
+        "yapper": 0.0,
+        "wanderer": 0.0,
+        "organizer": 0.85,
+        "type": "probably into LOTR"
+    },
+    "type13": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 0.85,
+        "brick": 0.0,
+        "sender": 0.0,
+        "yapper": 0.0,
+        "wanderer": 0.0,
+        "organizer": 0.85,
+        "type": "hyperfixation nerd"
+    }, 
+    "type14": {
+        "clown": 0.0,
+        "hater": 0.0,
+        "grinder": 0.0,
+        "brick": 0.85,
+        "sender": 0.85,
+        "yapper": 0.0,
+        "wanderer": 0.0,
+        "organizer": 0.85,
+        "type": "crayon eater"
     }
 }

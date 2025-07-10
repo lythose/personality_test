@@ -213,8 +213,8 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
     form_reset = None # reset the form value each time the questions are cycled
     if ctx.triggered_id in ['start_btn', 'reset_btn']:
         np.random.shuffle(question_ids) # randomize question order each time
-        text = f'Q1/{len(questions_json)}: {questions_json[question_ids[0]]['text']}' # we 1 index here :)
-        debug_text = f'[{questions_json[question_ids[0]]['type']}]'
+        text = f"Q1/{len(questions_json)}: {questions_json[question_ids[0]]['text']}" # we 1 index here :)
+        debug_text = f"[{questions_json[question_ids[0]]['type']}]"
         score_debug_text = ''
         return (text, 
                 hide_next_btn,
@@ -266,9 +266,9 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
         local_test_results[architype] = local_test_results[architype] + form_conversion[np.where(selection==np.array(form_options))][0] * scale / 18.0
     
     q_index += 1
-    text = f'Q{q_index+1}/{len(questions_json)}: {questions_json[question_ids[q_index]]['text']}' # and here :)
-    debug_text = f'[{questions_json[question_ids[q_index]]['type']}]'
-    score_debug_text = f'{[f'{itype, float(score)}' for itype, score in local_test_results.items()]}'
+    text = f"Q{q_index+1}/{len(questions_json)}: {questions_json[question_ids[q_index]]['text']}" # and here :)
+    debug_text = f"[{questions_json[question_ids[q_index]]['type']}]"
+    score_debug_text = f"{[f'{itype, float(score)}' for itype, score in local_test_results.items()]}"
 
     return text, hide_next_btn, hide_result_btn, hide_form_div, disable_next_btn, disable_reset_btn, disable_start_btn, form_reset, local_test_results, q_index, question_ids, debug_text, score_debug_text
 
