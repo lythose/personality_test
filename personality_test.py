@@ -2,6 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 from PIL import Image
 import json
+from dash import html
 
 # Lambda functions 
 axes_to_polar = lambda points: np.array([np.linalg.norm(points[1]-points[0]), np.atan2(points[1][1] - points[0][1], points[1][0] - points[0][0])])
@@ -87,24 +88,38 @@ def get_meta_results(results: np.ndarray, meta_dict: dict):
     # using the square to eliminate all the irrelevant scores from each meta type and then comparing against the original array 
     comparison = np.all(np.equal((results.reshape(8,1) * meta_array - meta_array**2) > 0, meta_array > 0),axis=0)
 
-    # get the index of the meta type TODO what if someone has multiple? 
+    # get the index of the meta type
+    meta_results = []
     if len(np.where(comparison)[0]) > 0:
-        meta_result_idx = np.where(comparison)[0][0]
+        meta_result_idx = np.where(comparison)[0]
 
-        return list(meta_dict.values())[meta_result_idx]['type']
+        # get the top 3 meta traits
+        for i, idx in enumerate(meta_result_idx):
+            meta_results.append(list(meta_dict.values())[idx]['type'])
+            if i == 2:
+                break
+
+        return meta_results
     
     else:
-        return "Yourself!" # we can't figure out what you are :)
+        return ["Yourself!"] # we can't figure out what you are :)
 
+def construct_meta_list(results: list):
+    """Just constructs the meta list object for display"""
+    children = [html.Ul(id='meta_list', children=[html.Li(m) for m in results])]
+    return children
 
 if __name__=="__main__":
     with open('./personality_test_app/meta_traits.json', encoding="utf8") as f:
         meta_json = json.load(f)
 
     # none testing
-    results = np.linspace(0,.1,8)
+    # results = np.linspace(0,.1,8)
 
     # one testing
     # results = np.linspace(0,1,8)
+
+    # n testing
+    results = np.ones(8) 
 
     get_meta_results(results,meta_json)

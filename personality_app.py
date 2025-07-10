@@ -6,7 +6,7 @@ import dash_bootstrap_components as dbc
 import json
 import os
 
-from personality_test import get_result_plot, get_base_image, get_meta_results
+from personality_test import get_result_plot, get_base_image, get_meta_results, construct_meta_list
 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 
@@ -137,9 +137,13 @@ app.layout = html.Div(
                                 id='reset_btn',
                                 disabled=True
                             ),
-                            dcc.Graph(
-                                id='result_plot',
-                                figure=original_fig,
+                            html.Div(
+                                dcc.Graph(
+                                    id='result_plot',
+                                    figure=original_fig,
+                                ),
+                                id='results_graph_div',
+                                hidden=True,
                             ),
                             html.Br(),
                         ],
@@ -275,6 +279,7 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
 
 @callback(
     Output('result_plot','figure',allow_duplicate=True),
+    Output('results_graph_div','hidden',allow_duplicate=True),
     Output('next_btn','hidden',allow_duplicate=True),
     Output('test_results_stored','data',allow_duplicate=True),
     Output('q_index_stored','data',allow_duplicate=True),
@@ -293,11 +298,14 @@ def return_test_results(n,test_results: dict):
     img_src = results_meme_srcs[type_max]["src"]
     img_alt = results_meme_srcs[type_max]["title"]
     meta_results_text = get_meta_results(results, meta_json)
+    meta_children = construct_meta_list(meta_results_text)
     q_index = 0
-    return get_result_plot(results), True, deepcopy(original_results), q_index, meta_results_text, False, app.get_asset_url(img_src), img_alt
+    hide_plot = False
+    return get_result_plot(results), hide_plot, True, deepcopy(original_results), q_index, meta_children, False, app.get_asset_url(img_src), img_alt
 
 @callback(
     Output('result_plot','figure',allow_duplicate=True),
+    Output('results_graph_div','hidden',allow_duplicate=True),
     Output('test_results_stored','data',allow_duplicate=True),
     Output('q_index_stored','data',allow_duplicate=True),
     Output('meta_div','hidden',allow_duplicate=True),
@@ -307,7 +315,8 @@ def return_test_results(n,test_results: dict):
 def reset_results(n):
     fig = get_base_image()
     q_index = 0
-    return fig, deepcopy(original_results), q_index, True
+    hide_plot = True
+    return fig, hide_plot, deepcopy(original_results), q_index, True
 
 @callback(
     Output('next_btn','disabled',allow_duplicate=True),
