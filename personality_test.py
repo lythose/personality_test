@@ -31,7 +31,7 @@ def get_base_image() -> go.Figure:
     )
     fig.update_xaxes(dict(showgrid=False, range=(0, sizex), visible=False))
     fig.update_yaxes(dict(showgrid=False, scaleanchor='x', range=(sizey, 0), visible=False))
-    fig.update_layout(width=sizex, height=sizey, plot_bgcolor='#ffffff')
+    fig.update_layout(width=int(sizex * 0.75), height=int(sizey * 0.75), plot_bgcolor='#212121', paper_bgcolor='#212121')
 
     return fig
 
@@ -46,14 +46,14 @@ def get_result_plot(results: np.ndarray) -> go.Figure:
 
     # Axes of traits 
     # -------------------- [low[x,y],high[x,y]]
-    clown      = np.array([[550,390],[115,152]])
-    wanderer = np.array([[618,321],[233,34]])
-    hater      = np.array([[718,321],[402,34]])
-    grinder    = np.array([[780,390],[520,152]])
-    brick      = np.array([[780,485],[520,321]])
-    organizer  = np.array([[718,552],[402,439]])
-    yapper     = np.array([[618,552],[233,439]])
-    sender     = np.array([[550,485],[115,321]])
+    clown      = np.array([[616,320],[519,91]])
+    wanderer   = np.array([[713,552],[809,785]])
+    hater      = np.array([[781,388],[1013,294]])
+    grinder    = np.array([[548,484],[317,581]])
+    brick      = np.array([[781,484],[1013,581]])
+    organizer  = np.array([[616,552],[520,785]])
+    yapper     = np.array([[548,388],[317,294]])
+    sender     = np.array([[713,320],[809,91]])
 
     fig = get_base_image()
 
@@ -69,8 +69,8 @@ def get_result_plot(results: np.ndarray) -> go.Figure:
 
     # plot the results on top of the image
     fig.add_scatter(name="Result",
-                    x=[clown_out[0], wanderer_out[0], hater_out[0], grinder_out[0], brick_out[0], organizer_out[0], yapper_out[0], sender_out[0]],
-                    y=[clown_out[1], wanderer_out[1], hater_out[1], grinder_out[1], brick_out[1], organizer_out[1], yapper_out[1], sender_out[1]],
+                    x=[clown_out[0], sender_out[0], hater_out[0], brick_out[0], wanderer_out[0], organizer_out[0], grinder_out[0], yapper_out[0]],
+                    y=[clown_out[1], sender_out[1], hater_out[1], brick_out[1], wanderer_out[1], organizer_out[1], grinder_out[1], yapper_out[1]],
                     fill="toself",
                     fillcolor="cyan",
                     opacity=0.7)

@@ -11,7 +11,7 @@ from personality_test import get_result_plot, get_base_image, get_meta_results, 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 
 original_fig = get_base_image()
-HIDE_DEBUG = False # Disable to see question mapping and scores while taking the test
+HIDE_DEBUG = True # Disable to see question mapping and scores while taking the test
 
 # Dictionary to update as the test is taken
 test_results = {
