@@ -8,7 +8,7 @@ axes_to_polar = lambda points: np.array([np.linalg.norm(points[1]-points[0]), np
 get_position = lambda r, polar, points: points[0] + polar[0] * r**2.5 * np.array([np.cos(polar[1]),np.sin(polar[1])])
 
 # source = Image.open("./images/personality.jpg") # use this when running from the .bat file
-source = Image.open("./personality_test_app/images/personality.jpg")
+source = Image.open("./personality_test_app/images/results_dark_mode.png")
 
 def get_base_image() -> go.Figure:
     """ Get the base image figure for the results
@@ -45,14 +45,14 @@ def get_result_plot(results: np.ndarray) -> go.Figure:
 
     # Axes of traits 
     # -------------------- [low[x,y],high[x,y]]
-    clown      = np.array([[253,210],[115,152]])
-    wanderer = np.array([[290,171],[233,34]])
-    hater      = np.array([[345,171],[402,34]])
-    grinder    = np.array([[383,210],[520,152]])
-    brick      = np.array([[383,264],[520,321]])
-    organizer  = np.array([[345,302],[402,439]])
-    yapper     = np.array([[290,302],[233,439]])
-    sender     = np.array([[253,264],[115,321]])
+    clown      = np.array([[550,390],[115,152]])
+    wanderer = np.array([[618,321],[233,34]])
+    hater      = np.array([[718,321],[402,34]])
+    grinder    = np.array([[780,390],[520,152]])
+    brick      = np.array([[780,485],[520,321]])
+    organizer  = np.array([[718,552],[402,439]])
+    yapper     = np.array([[618,552],[233,439]])
+    sender     = np.array([[550,485],[115,321]])
 
     fig = get_base_image()
 
