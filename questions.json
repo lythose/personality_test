@@ -11,7 +11,7 @@
     }, 
     "H3": {
         "text": "I enjoy making fun of my friends", 
-        "scale": [1.0, 1.0, 1.0],
+        "scale": [1.0, 1.0],
         "type": ["hater", "clown"]
     }, 
     "H4": {

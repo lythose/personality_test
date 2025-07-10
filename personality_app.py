@@ -21,7 +21,7 @@ test_results = {
     "brick": 0.0,
     "sender": 0.0,
     "yapper": 0.0,
-    "instigator": 0.0, 
+    "wanderer": 0.0, 
     "organizer": 0.0
 }
 original_results = deepcopy(test_results)
@@ -40,7 +40,7 @@ results_meme_srcs = {
                "title": "Break a leg!"},
     "yapper": {"src": "yapper_meme.jpg", 
                "title": "Oh, PLEASE go on..."},
-    "instigator": {"src": "instigator_meme.jpg",
+    "wanderer": {"src": "wanderer_meme.jpg",
                     "title": "Are you a secret politician?"}, 
     "organizer": {"src": "organizer_meme.jpg", 
                   "title": ""},
