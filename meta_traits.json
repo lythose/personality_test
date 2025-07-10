@@ -1,12 +1,12 @@
 {
     "type1": {
-        "clown": 0.0,
-        "hater": 0.0,
+        "clown": 0.85,
+        "hater": 0.85,
         "grinder": 0.0,
         "brick": 0.0,
         "sender": 0.0,
         "yapper": 0.85,
-        "instigator": 0.85,
+        "wanderer": 0.0,
         "organizer": 0.0,
         "type": "puppet master"
     },
@@ -17,7 +17,7 @@
         "brick": 0.0,
         "sender": 0.85,
         "yapper": 0.0,
-        "instigator": 0.0,
+        "wanderer": 0.0,
         "organizer": 0.0,
         "type": "granola (sweaty tryhard)"
     },
@@ -28,7 +28,7 @@
         "brick": 0.0,
         "sender": 0.0,
         "yapper": 0.0,
-        "instigator": 0.0,
+        "wanderer": 0.0,
         "organizer": 0.85,
         "type": "spacex alum"
     },
@@ -39,7 +39,7 @@
         "brick": 0.0,
         "sender": 0.0,
         "yapper": 0.0,
-        "instigator": 0.0,
+        "wanderer": 0.0,
         "organizer": 0.0,
         "type": "evil jingles"
     },
@@ -50,7 +50,7 @@
         "brick": 0.0,
         "sender": 0.0,
         "yapper": 0.85,
-        "instigator": 0.0,
+        "wanderer": 0.0,
         "organizer": 0.85,
         "type": "andy"
     },
@@ -61,7 +61,7 @@
         "brick": 0.0,
         "sender": 0.0,
         "yapper": 0.0,
-        "instigator": 0.85,
+        "wanderer": 0.0,
         "organizer": 0.85,
         "type": "gaslight gatekeep girlboss"
     },
@@ -72,7 +72,7 @@
         "brick": 0.0,
         "sender": 0.0,
         "yapper": 0.0,
-        "instigator": 0.0,
+        "wanderer": 0.0,
         "organizer": 0.85,
         "type": "maximizer of shareholder value"
     },
@@ -83,7 +83,7 @@
         "brick": 0.0,
         "sender": 0.0,
         "yapper": 0.0,
-        "instigator": 0.85,
+        "wanderer": 0.0,
         "organizer": 0.85,
         "type": "friend group mom"
     },
@@ -94,7 +94,7 @@
         "brick": 0.0,
         "sender": 0.0,
         "yapper": 0.0,
-        "instigator": 0.0,
+        "wanderer": 0.0,
         "organizer": 0.85,
         "type": "big ol' nerd"
     }, 
@@ -105,7 +105,7 @@
         "brick": 0.85,
         "sender": 0.0,
         "yapper": 0.85,
-        "instigator": 0.85,
+        "wanderer": 0.85,
         "organizer": 0.0,
         "type": "friend group child"
     }
