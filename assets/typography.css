@@ -11,6 +11,7 @@ body {
 
 P, H2, H3, .radioItems {
     color: white;
+    font-family:  "Comic Sans MS", "Comic Sans", cursive;
 }
 
 @keyframes effect {
