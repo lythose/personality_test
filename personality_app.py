@@ -28,21 +28,21 @@ original_results = deepcopy(test_results)
 
 img_folder = "./personality_test_app/images/"
 results_meme_srcs = {
-    "clown": {"src": "clown_meme.jpg", 
+    "clown": {"src": "meme_page_clown.png", 
               "title": "Welcome to the Clown Council"},
-    "hater": {"src": "hater_meme.jpg", 
+    "hater": {"src": "meme_page_hater.png", 
               "title": "You should go to therapy"},
-    "grinder": {"src": "grinder_meme.jpg", 
+    "grinder": {"src": "meme_page_grinder.png", 
                 "title": "The shareholders are very pleased"},
-    "brick": {"src": "brick_meme.jpg", 
+    "brick": {"src": "meme_page_brick.png", 
               "title": "Please touch some grass"},
-    "sender": {"src": "sender_meme.jpg", 
+    "sender": {"src": "meme_page_sender.png", 
                "title": "Break a leg!"},
-    "yapper": {"src": "yapper_meme.jpg", 
+    "yapper": {"src": "meme_page_yapper.png", 
                "title": "Oh, PLEASE go on..."},
-    "wanderer": {"src": "wanderer_meme.jpg",
+    "wanderer": {"src": "meme_page_wanderer.png",
                     "title": "Are you a secret politician?"}, 
-    "organizer": {"src": "organizer_meme.jpg", 
+    "organizer": {"src": "meme_page_organizer.png", 
                   "title": ""},
 }
 
