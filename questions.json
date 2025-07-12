@@ -31,7 +31,7 @@
     },
     
     "Y1": {
-        "text": "I enjoy talking to people and will actively seek out conversations and social interaction",
+        "text": "People often come up to my desk to talk to me about non work related things",
         "scale": 1.0,
         "type": "yapper"
     },
@@ -43,27 +43,27 @@
     },
     
     "Y3": {
-        "text": "I was “a distraction to other students” growing up",
+        "text": "I often go on walks with my friends to chat and catch up",
         "scale": 1.0,
         "type": "yapper"
     },
     
     "Y4": {
-        "text": "I can easily talk to my friends for 5+ hours",
+        "text": "I enjoy having multi-hour conversations with my friends about everything and nothing",
         "scale": [1.0, -1.0],
         "type": ["yapper", "brick"]
     },
     
     "Y5": {
-        "text": "I enjoy social gatherings",
+        "text": "I enjoy social gatherings and will often jumpstart conversations",
         "scale": [1.0, -1.0],
         "type": ["yapper", "brick"]
     },
     
     "Y6": {
-        "text": "Once I am comfortable around someone I feel I can say anything ",
-        "scale": 1.0,
-        "type": "yapper"
+        "text": "I enjoy a good recurring bit in my friend groups",
+        "scale": [1.0, 1.0],
+        "type": ["yapper", "clown"]
     },
     
     "B1": {
