@@ -9,6 +9,10 @@ body {
     background-color: #212121;
 }
 
+* {
+    cursor: url('clown_emoji.png'), auto;
+}
+
 P, H2, H3, .radioItems {
     color: white;
     font-family:  "Comic Sans MS", "Comic Sans", cursive;

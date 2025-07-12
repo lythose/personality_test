@@ -41,9 +41,9 @@ results_meme_srcs = {
     "yapper": {"src": "meme_page_yapper.png", 
                "title": "Oh, PLEASE go on..."},
     "wanderer": {"src": "meme_page_wanderer.png",
-                    "title": "Are you a secret politician?"}, 
+                    "title": "Are you lost?"}, 
     "organizer": {"src": "meme_page_organizer.png", 
-                  "title": ""},
+                  "title": "Born to Excel"},
 }
 
 questions_json: dict = {}
@@ -76,7 +76,6 @@ meta_div = html.Div(
     children=[
         html.H2("Congrats! You're a ..."),
         html.H3("",id="meta_result_header"),
-        html.P("lorem ipsum",id="meta_description"),
         html.Br(),
         html.Img(id='meme_img',
                  style={
@@ -111,53 +110,66 @@ app.layout = html.Div(
         ),
         html.Br(),
         html.Div(
-            dbc.Row(
-                [
-                    dbc.Col(
-                        [
-                            form_div,
-                            html.Br(),
-                            html.Button(
-                                "Start Questions",
-                                id='start_btn',
-                            ),
-                            html.Button(
-                                "Next Question",
-                                id='next_btn',
-                                hidden=True,
-                                disabled=True,
-                            ),
-                            html.Button(
-                                "Get Results!",
-                                id='result_btn',
-                                hidden=HIDE_DEBUG, # Just to be able to skip to the end
-                            ),
-                            html.Button(
-                                "Start Over",
-                                id='reset_btn',
-                                disabled=True
-                            ),
-                            html.Div(
-                                dcc.Graph(
-                                    id='result_plot',
-                                    figure=original_fig,
+            [
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            [
+                                form_div,
+                                html.P("Screenshot to share with your friends and/or coworkers! :)", id='screenshot_msg',hidden=True),
+                                html.Br(),
+                                html.Button(
+                                    "Start Questions",
+                                    id='start_btn',
                                 ),
-                                id='results_graph_div',
-                                hidden=True,
-                            ),
-                            html.Br(),
-                        ],
-                        width="auto",
-                        
-                    ), 
-                    dbc.Col(
-                        [
-                            meta_div,
-                        ],
-                        width="auto",
-                    )
-                ]
-            ),
+                                html.Button(
+                                    "Next Question",
+                                    id='next_btn',
+                                    hidden=True,
+                                    disabled=True,
+                                ),
+                                html.Button(
+                                    "Get Results!",
+                                    id='result_btn',
+                                    hidden=HIDE_DEBUG, # Just to be able to skip to the end
+                                ),
+                                html.Button(
+                                    "Start Over",
+                                    id='reset_btn',
+                                    disabled=True
+                                ),
+                                html.Br(),
+                            ],
+                            width=6,
+                        )
+                    ]
+                ),
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            [
+                                html.Div(
+                                    dcc.Graph(
+                                        id='result_plot',
+                                        figure=original_fig,
+                                    ),
+                                    id='results_graph_div',
+                                    hidden=True,
+                                ),
+                                html.Br(),
+                            ],
+                            width="auto",
+                            
+                        ), 
+                        dbc.Col(
+                            [
+                                meta_div,
+                            ],
+                            width="auto",
+                        )
+                    ]
+                )
+            ],
             style={
                 "border": "5px #212121",
             }
@@ -197,6 +209,7 @@ app.title = 'Brainrot Personality Test'
     Output('question_ids_stored','data',allow_duplicate=True),
     Output('question_debug','children'),
     Output('score_debug','children'),
+    Output('screenshot_msg','hidden',allow_duplicate=True),
     Input('next_btn','n_clicks'),
     Input('start_btn','n_clicks'),
     Input('reset_btn','n_clicks'),
@@ -214,6 +227,7 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
     disable_next_btn = True
     disable_reset_btn = True
     disable_start_btn = False
+    hide_screenshot_msg = True
     form_reset = None # reset the form value each time the questions are cycled
     if ctx.triggered_id in ['start_btn', 'reset_btn']:
         np.random.shuffle(question_ids) # randomize question order each time
@@ -232,7 +246,8 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
                 0,
                 question_ids,
                 debug_text,
-                score_debug_text) 
+                score_debug_text,
+                hide_screenshot_msg) 
 
     if q_index+1 == len(questions_json):
         text = ''
@@ -256,7 +271,8 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
                 q_index,            # <--
                 question_ids, 
                 debug_text,
-                score_debug_text)
+                score_debug_text,
+                hide_screenshot_msg)
     
     # Get necessary info for incrementing results
     scale = questions_json[question_ids[q_index]]['scale']
@@ -274,7 +290,20 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
     debug_text = f"[{questions_json[question_ids[q_index]]['type']}]"
     score_debug_text = f"{[f'{itype, float(score)}' for itype, score in local_test_results.items()]}"
 
-    return text, hide_next_btn, hide_result_btn, hide_form_div, disable_next_btn, disable_reset_btn, disable_start_btn, form_reset, local_test_results, q_index, question_ids, debug_text, score_debug_text
+    return (text, 
+            hide_next_btn, 
+            hide_result_btn, 
+            hide_form_div, 
+            disable_next_btn, 
+            disable_reset_btn, 
+            disable_start_btn, 
+            form_reset, 
+            local_test_results, 
+            q_index,
+            question_ids, 
+            debug_text, 
+            score_debug_text, 
+            hide_screenshot_msg)
 
 
 @callback(
@@ -287,6 +316,7 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
     Output('meta_div','hidden',allow_duplicate=True),
     Output('meme_img','src',allow_duplicate=True),
     Output('meme_img','title',allow_duplicate=True),
+    Output('screenshot_msg','hidden',allow_duplicate=True),
     Input('result_btn','n_clicks'),
     State('test_results_stored','data'),
     prevent_initial_call=True
@@ -301,7 +331,7 @@ def return_test_results(n,test_results: dict):
     meta_children = construct_meta_list(meta_results_text)
     q_index = 0
     hide_plot = False
-    return get_result_plot(results), hide_plot, True, deepcopy(original_results), q_index, meta_children, False, app.get_asset_url(img_src), img_alt
+    return get_result_plot(results), hide_plot, True, deepcopy(original_results), q_index, meta_children, False, app.get_asset_url(img_src), img_alt, False
 
 @callback(
     Output('result_plot','figure',allow_duplicate=True),
@@ -309,6 +339,7 @@ def return_test_results(n,test_results: dict):
     Output('test_results_stored','data',allow_duplicate=True),
     Output('q_index_stored','data',allow_duplicate=True),
     Output('meta_div','hidden',allow_duplicate=True),
+    Output('screenshot_msg','hidden',allow_duplicate=True),
     Input('reset_btn','n_clicks'),
     prevent_initial_call=True
 )
@@ -316,7 +347,7 @@ def reset_results(n):
     fig = get_base_image()
     q_index = 0
     hide_plot = True
-    return fig, hide_plot, deepcopy(original_results), q_index, True
+    return fig, hide_plot, deepcopy(original_results), q_index, True, True
 
 @callback(
     Output('next_btn','disabled',allow_duplicate=True),
