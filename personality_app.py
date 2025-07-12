@@ -58,7 +58,7 @@ with open('./personality_test_app/meta_traits.json', encoding="utf8") as f:
 
 q_index = 0
 form_options = ["Strongly Agree", "Agree", "Slightly Agree", "Slightly Disagree", "Disagree", "Strongly Disagree"]
-form_conversion = np.array([4.0, 3.0, 2.0, 1.0, 0.0, -1.0])
+form_conversion = np.array([3.25, 3.0, 2.0, 1.0, 0.0, -0.25])
 
 form_div = html.Div(
     id='form_div',
