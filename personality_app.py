@@ -60,6 +60,16 @@ q_index = 0
 form_options = ["Strongly Agree", "Agree", "Slightly Agree", "Slightly Disagree", "Disagree", "Strongly Disagree"]
 form_conversion = np.array([3.25, 3.0, 2.0, 1.0, 0.0, -0.25])
 
+entered_name = ""
+troll_div = html.Div(
+    id='troll_div',
+    children=[
+        html.P("Q0: What is your name?",id='troll_question'),
+        dcc.Input(value=entered_name, id="troll_name")
+    ],
+    hidden=True,
+)
+
 form_div = html.Div(
     id='form_div',
     children=[
@@ -116,6 +126,7 @@ app.layout = html.Div(
                         dbc.Col(
                             [
                                 form_div,
+                                troll_div,
                                 html.P("Screenshot to share with your friends and/or coworkers! :)", id='screenshot_msg',hidden=True),
                                 html.Br(),
                                 html.Button(
@@ -189,6 +200,11 @@ app.layout = html.Div(
             id='question_ids_stored',
             data=question_ids,
             storage_type='memory',
+        ),
+        dcc.Store(
+            id='troll_entered_name',
+            data=entered_name,
+            storage_type='memory',
         )
     ]
 )
@@ -210,6 +226,8 @@ app.title = 'Brainrot Personality Test'
     Output('question_debug','children'),
     Output('score_debug','children'),
     Output('screenshot_msg','hidden',allow_duplicate=True),
+    Output('troll_div','hidden',allow_duplicate=True),
+    Output('troll_entered_name','data'),
     Input('next_btn','n_clicks'),
     Input('start_btn','n_clicks'),
     Input('reset_btn','n_clicks'),
@@ -217,9 +235,11 @@ app.title = 'Brainrot Personality Test'
     State('q_index_stored','data'),
     State('test_results_stored','data'),
     State('question_ids_stored','data'),
+    State('troll_name','value'),
+    State('troll_entered_name','data'),
     prevent_initial_call=True
 )
-def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
+def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids,input_name,stored_name):
     local_test_results = deepcopy(test_results)
     hide_next_btn = False
     hide_result_btn = True
@@ -228,12 +248,16 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
     disable_reset_btn = True
     disable_start_btn = False
     hide_screenshot_msg = True
+    hide_troll_question = True
+    name_output = stored_name
     form_reset = None # reset the form value each time the questions are cycled
     if ctx.triggered_id in ['start_btn', 'reset_btn']:
         np.random.shuffle(question_ids) # randomize question order each time
-        text = f"Q1/{len(questions_json)}: {questions_json[question_ids[0]]['text']}" # we 1 index here :)
-        debug_text = f"[{questions_json[question_ids[0]]['type']}]"
-        score_debug_text = ''
+        text = ""
+        debug_text = ""
+        score_debug_text = ""
+        hide_troll_question = False
+        hide_form_div = True
         return (text, 
                 hide_next_btn,
                 hide_result_btn, 
@@ -247,63 +271,127 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
                 question_ids,
                 debug_text,
                 score_debug_text,
-                hide_screenshot_msg) 
-
-    if q_index+1 == len(questions_json):
-        text = ''
-        hide_next_btn = True
-        hide_form_div = True
-        hide_result_btn = False
-        disable_reset_btn = False
-        disable_start_btn = True
-        debug_text = ''
-        score_debug_text = ''
-
-        return (text,
-                hide_next_btn,
-                hide_result_btn,
-                hide_form_div,
-                disable_next_btn,
-                disable_reset_btn,
-                disable_start_btn,
-                form_reset,
-                local_test_results, # <-- want these to stay the same until the results are returned
-                q_index,            # <--
-                question_ids, 
-                debug_text,
-                score_debug_text,
-                hide_screenshot_msg)
+                hide_screenshot_msg,
+                hide_troll_question,
+                name_output) 
     
-    # Get necessary info for incrementing results
-    scale = questions_json[question_ids[q_index]]['scale']
-    architype = questions_json[question_ids[q_index]]['type']
+    # Need to update the stored name after the first cycle
+    if q_index == 0 and len(stored_name) == 0:
+        name_output = input_name
+        # Do a little trolling
+        if input_name.lower() in ["nic", "nicolas"]:
+            text = ''
+            hide_next_btn = True
+            hide_form_div = True
+            hide_result_btn = False
+            disable_reset_btn = False
+            disable_start_btn = True
+            debug_text = ''
+            score_debug_text = ''
 
-    # Increment results
-    if type(architype) == list:
-        for idx, item in enumerate(architype):
-            local_test_results[item] = local_test_results[item] + form_conversion[np.where(selection==np.array(form_options))][0] * scale[idx] / 18.0
+            return (text,
+                    hide_next_btn,
+                    hide_result_btn,
+                    hide_form_div,
+                    disable_next_btn,
+                    disable_reset_btn,
+                    disable_start_btn,
+                    form_reset,
+                    local_test_results, # <-- want these to stay the same until the results are returned
+                    q_index,            # <--
+                    question_ids, 
+                    debug_text,
+                    score_debug_text,
+                    hide_screenshot_msg,
+                    hide_troll_question,
+                    name_output)
+        
+        else:
+            # Need to set up for the next question with the current q index
+            text = f"Q{q_index+1}/{len(questions_json)}: {questions_json[question_ids[q_index]]['text']}"
+            debug_text = f"[{questions_json[question_ids[q_index]]['type']}]"
+            score_debug_text = f"{[f'{itype, float(score)}' for itype, score in local_test_results.items()]}"
+
+            return (text, 
+                    hide_next_btn, 
+                    hide_result_btn, 
+                    hide_form_div, 
+                    disable_next_btn, 
+                    disable_reset_btn, 
+                    disable_start_btn, 
+                    form_reset, 
+                    local_test_results, 
+                    q_index,
+                    question_ids, 
+                    debug_text, 
+                    score_debug_text, 
+                    hide_screenshot_msg,
+                    hide_troll_question,
+                    name_output)
+    
     else:
-        local_test_results[architype] = local_test_results[architype] + form_conversion[np.where(selection==np.array(form_options))][0] * scale / 18.0
-    
-    q_index += 1
-    text = f"Q{q_index+1}/{len(questions_json)}: {questions_json[question_ids[q_index]]['text']}" # and here :)
-    debug_text = f"[{questions_json[question_ids[q_index]]['type']}]"
-    score_debug_text = f"{[f'{itype, float(score)}' for itype, score in local_test_results.items()]}"
+        # Get necessary info for incrementing results of the question that was just answered
+        scale = questions_json[question_ids[q_index]]['scale']
+        architype = questions_json[question_ids[q_index]]['type']
 
-    return (text, 
-            hide_next_btn, 
-            hide_result_btn, 
-            hide_form_div, 
-            disable_next_btn, 
-            disable_reset_btn, 
-            disable_start_btn, 
-            form_reset, 
-            local_test_results, 
-            q_index,
-            question_ids, 
-            debug_text, 
-            score_debug_text, 
-            hide_screenshot_msg)
+        # Increment results
+        if type(architype) == list:
+            for idx, item in enumerate(architype):
+                local_test_results[item] = local_test_results[item] + form_conversion[np.where(selection==np.array(form_options))][0] * scale[idx] / 18.0
+        else:
+            local_test_results[architype] = local_test_results[architype] + form_conversion[np.where(selection==np.array(form_options))][0] * scale / 18.0
+    
+        # Return if the last question was just answered
+        if q_index+1 == len(questions_json):
+            text = ''
+            hide_next_btn = True
+            hide_form_div = True
+            hide_result_btn = False
+            disable_reset_btn = False
+            disable_start_btn = True
+            debug_text = ''
+            score_debug_text = ''
+
+            return (text,
+                    hide_next_btn,
+                    hide_result_btn,
+                    hide_form_div,
+                    disable_next_btn,
+                    disable_reset_btn,
+                    disable_start_btn,
+                    form_reset,
+                    local_test_results, # <-- want these to stay the same until the results are returned
+                    q_index,            # <--
+                    question_ids, 
+                    debug_text,
+                    score_debug_text,
+                    hide_screenshot_msg,
+                    hide_troll_question,
+                    name_output)
+
+        else:
+            # Need to set up for the next question
+            q_index += 1
+            text = f"Q{q_index+1}/{len(questions_json)}: {questions_json[question_ids[q_index]]['text']}" # we're zero indexing now :(
+            debug_text = f"[{questions_json[question_ids[q_index]]['type']}]"
+            score_debug_text = f"{[f'{itype, float(score)}' for itype, score in local_test_results.items()]}"
+
+            return (text, 
+                    hide_next_btn, 
+                    hide_result_btn, 
+                    hide_form_div, 
+                    disable_next_btn, 
+                    disable_reset_btn, 
+                    disable_start_btn, 
+                    form_reset, 
+                    local_test_results, 
+                    q_index,
+                    question_ids, 
+                    debug_text, 
+                    score_debug_text, 
+                    hide_screenshot_msg,
+                    hide_troll_question,
+                    name_output)
 
 
 @callback(
@@ -317,21 +405,29 @@ def cycle_questions(n1,n2,n3,selection,q_index,test_results:dict,question_ids):
     Output('meme_img','src',allow_duplicate=True),
     Output('meme_img','title',allow_duplicate=True),
     Output('screenshot_msg','hidden',allow_duplicate=True),
+    Output('troll_div','hidden',allow_duplicate=True),
     Input('result_btn','n_clicks'),
     State('test_results_stored','data'),
+    State('troll_entered_name','data'),
     prevent_initial_call=True
 )
-def return_test_results(n,test_results: dict):
+def return_test_results(n,test_results: dict, stored_name: str):
     results = np.array(list(test_results.values()))
     idx_max = np.where(results == np.max(results))[0][0]
     type_max = list(test_results.keys())[idx_max]
-    img_src = results_meme_srcs[type_max]["src"]
-    img_alt = results_meme_srcs[type_max]["title"]
-    meta_results_text = get_meta_results(results, meta_json)
-    meta_children = construct_meta_list(meta_results_text)
+    # We do a little trolling
+    if stored_name.lower() in ["nic", "nicolas"]:
+        img_src = "software_results.png"
+        img_alt = "Hate to break the news to you like this, bud"
+        meta_children = [html.Ul(id='meta_list', children=[html.Li("Software Engineer")])]
+    else:
+        img_src = results_meme_srcs[type_max]["src"]
+        img_alt = results_meme_srcs[type_max]["title"]
+        meta_results_text = get_meta_results(results, meta_json)
+        meta_children = construct_meta_list(meta_results_text)
     q_index = 0
     hide_plot = False
-    return get_result_plot(results), hide_plot, True, deepcopy(original_results), q_index, meta_children, False, app.get_asset_url(img_src), img_alt, False
+    return get_result_plot(results), hide_plot, True, deepcopy(original_results), q_index, meta_children, False, app.get_asset_url(img_src), img_alt, False, True
 
 @callback(
     Output('result_plot','figure',allow_duplicate=True),
@@ -340,6 +436,9 @@ def return_test_results(n,test_results: dict):
     Output('q_index_stored','data',allow_duplicate=True),
     Output('meta_div','hidden',allow_duplicate=True),
     Output('screenshot_msg','hidden',allow_duplicate=True),
+    Output('troll_div','hidden',allow_duplicate=True),
+    Output('troll_entered_name','data',allow_duplicate=True),
+    Output('troll_name','value',allow_duplicate=True),
     Input('reset_btn','n_clicks'),
     prevent_initial_call=True
 )
@@ -347,17 +446,21 @@ def reset_results(n):
     fig = get_base_image()
     q_index = 0
     hide_plot = True
-    return fig, hide_plot, deepcopy(original_results), q_index, True, True
+    reset_name = ""
+    return fig, hide_plot, deepcopy(original_results), q_index, True, True, True, reset_name, reset_name
 
 @callback(
     Output('next_btn','disabled',allow_duplicate=True),
     Input('form_select','value'),
+    Input('troll_name','value'),
+    State('troll_div','hidden'),
+
     prevent_initial_call=True,
 )
-def enable_next_btn(v):
+def enable_next_btn(v, name_input,troll_div_hidden):
     """ Just enables the next button whenever something is selected
     """
-    if v is not None:
+    if v is not None or (len(name_input) > 0 and not troll_div_hidden):
         return False
     return True
 
