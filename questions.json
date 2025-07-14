@@ -20,32 +20,32 @@
         "type": "hater"
     }, 
     "H5": {
-        "text": "People often irritate me", 
+        "text": "People irritate me", 
         "scale": 1.0, 
         "type": "hater"
     }, 
     "H6": {
-        "text": "I say or think mean things about other people often", 
+        "text": "I say or think mean things about other people", 
         "scale": 1.0, 
         "type": "hater"
     },
     
     "Y1": {
-        "text": "People often come up to my desk to talk to me about non work related things",
+        "text": "People come up to my desk to talk to me about non work related things",
         "scale": 1.0,
         "type": "yapper"
     },
     
     "Y2": {
-        "text": "When I am bored, I go to other people’s desks to talk to them",
+        "text": "When I am bored, I go to other people’s desks to talk",
         "scale": 1.0,
         "type": "yapper"
     },
     
     "Y3": {
-        "text": "I often go on walks with my friends to chat and catch up",
-        "scale": 1.0,
-        "type": "yapper"
+        "text": "I schedule hangouts with my friends to chat and catch up",
+        "scale": [1.0, -1.0],
+        "type": ["yapper", "brick"]
     },
     
     "Y4": {
@@ -55,7 +55,7 @@
     },
     
     "Y5": {
-        "text": "I enjoy social gatherings and will often jumpstart conversations",
+        "text": "I enjoy social gatherings and will jumpstart conversations",
         "scale": [1.0, -1.0],
         "type": ["yapper", "brick"]
     },
@@ -67,7 +67,7 @@
     },
     
     "B1": {
-        "text": "I do not often go places other than work and my home",
+        "text": "I do not go places other than work and my home",
         "scale": 1.0,
         "type": "brick"
     },
@@ -109,7 +109,7 @@
     },
     
     "S2": {
-        "text": "I often do things that other people deem “too risky”",
+        "text": "I do things that other people deem “too physically risky”",
         "scale": 1.0,
         "type": "sender"
     },
@@ -145,7 +145,7 @@
     },
     
     "G2": {
-        "text": "I will continue to work on a problem for much longer than other people would",
+        "text": "I am either the first person in or the last person out of the office",
         "scale": 1.0,
         "type": "grinder"
     },
@@ -175,7 +175,7 @@
     },
     
     "C1": {
-        "text": "My laughter can often be heard around the office",
+        "text": "My laughter can be heard around the office",
         "scale": 1.0,
         "type": "clown"
     },
@@ -187,7 +187,7 @@
     },
     
     "C3": {
-        "text": "There are frequently jokes made by me or about me",
+        "text": "There are jokes made by me or about me",
         "scale": 1.0,
         "type": "clown"
     },
@@ -205,13 +205,13 @@
     },
     
     "C6": {
-        "text": "I am generally a happy person and make the people around me happy too",
+        "text": "I am a happy person and make the people around me happy too",
         "scale": 1.0,
         "type": "clown"
     },
 
     "W1": {
-        "text": "I am often sidetracked while in the middle of working on a task",
+        "text": "I get sidetracked while in the middle of working on a task",
         "scale": 1.0,
         "type": "wanderer"
     },
@@ -259,7 +259,7 @@
     },
     
     "O3": {
-        "text": "I have a weekly routine that I generally do not like to deviate from",
+        "text": "I have a weekly routine that I do not like to deviate from",
         "scale": [1.0, 1.0],
         "type": ["organizer", "brick"]
     },
